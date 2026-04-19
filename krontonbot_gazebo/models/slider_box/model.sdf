@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<sdf version="1.8">
+    <model name="slider_box">
+        <link name="box_link">
+            <pose>0 0 0.5 0 0 0</pose>
+            <inertial>
+                <mass>1.0</mass>
+                <inertia>
+                    <ixx>1</ixx> <ixy>0</ixy> <ixz>0</ixz>
+                    <iyy>1</iyy> <iyz>0</iyz> <izz>1</izz>
+                </inertia>
+            </inertial>
+            <visual name="visual">
+                <geometry><box><size>1 1 1</size></box></geometry>
+                <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
+            </visual>
+            <collision name="collision">
+                <geometry><box><size>1 1 1</size></box></geometry>
+            </collision>
+        </link>
+
+        <joint name="slider_joint" type="prismatic">
+            <parent>world</parent>
+            <child>box_link</child>
+            <axis>
+                <xyz>1 0 0</xyz> <limit>
+                    <lower>-5.0</lower> <upper>5.0</upper>
+                </limit>
+            </axis>
+        </joint>
+
+        <plugin
+            filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+            <joint_name>slider_joint</joint_name>
+            <topic>box_pose</topic>
+            <p_gain>0.05</p_gain>
+            <i_gain>0.001</i_gain>
+            <d_gain>0.02</d_gain>
+            <i_max>1</i_max>
+            <i_min>-1</i_min>
+            <cmd_max>0.5</cmd_max>
+            <cmd_min>-0.5</cmd_min>
+        </plugin>
+    </model>
+</sdf>
