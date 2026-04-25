@@ -9,6 +9,8 @@ def generate_launch_description():
     # Paths to configuration files
     planner_yaml = os.path.join(get_package_share_directory('krontonbot_navigation'), 'config', 'planner_server.yaml')
     bt_navigator_yaml = os.path.join(get_package_share_directory('krontonbot_navigation'), 'config', 'bt_navigator.yaml')
+    bt_xml_path = os.path.join(  get_package_share_directory('krontonbot_navigation'), 
+                               'behavior_trees', 'planner_only.xml')
     use_sim_time=True
 
     # Planner Server Node
@@ -27,7 +29,9 @@ def generate_launch_description():
         name='bt_navigator',
         output='screen',
         parameters=[bt_navigator_yaml,
-            {"use_sim_time": use_sim_time}
+            {"use_sim_time": use_sim_time},
+            {'default_nav_to_pose_bt_xml': bt_xml_path},
+            {'default_nav_through_poses_bt_xml': bt_xml_path}
             ]
         )
     

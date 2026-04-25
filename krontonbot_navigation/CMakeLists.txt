@@ -23,7 +23,7 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-install(DIRECTORY launch config map
+install(DIRECTORY launch config map behavior_trees
   DESTINATION share/${PROJECT_NAME}/
 )
 ament_package()
